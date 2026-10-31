@@ -110,10 +110,19 @@ def test_platform_directory_helpers_use_modeldock_scope(monkeypatch) -> None:
 
         return lookup
 
-    monkeypatch.setattr("modeldock.common.platform.platformdirs.user_config_dir", record("config", "/cfg"))
-    monkeypatch.setattr("modeldock.common.platform.platformdirs.user_cache_dir", record("cache", "/cache"))
-    monkeypatch.setattr("modeldock.common.platform.platformdirs.user_data_dir", record("data", "/data"))
-    monkeypatch.setattr("modeldock.common.platform.platformdirs.site_config_dir", record("system", "/etc/modeldock"))
+    monkeypatch.setattr(
+        "modeldock.common.platform.platformdirs.user_config_dir", record("config", "/cfg")
+    )
+    monkeypatch.setattr(
+        "modeldock.common.platform.platformdirs.user_cache_dir", record("cache", "/cache")
+    )
+    monkeypatch.setattr(
+        "modeldock.common.platform.platformdirs.user_data_dir", record("data", "/data")
+    )
+    monkeypatch.setattr(
+        "modeldock.common.platform.platformdirs.site_config_dir",
+        record("system", "/etc/modeldock"),
+    )
 
     assert app_name() == "modeldock"
     assert user_config_dir() == Path("/cfg")
