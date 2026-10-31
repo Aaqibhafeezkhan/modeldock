@@ -182,12 +182,20 @@ def test_print_warning_writes_only_to_stderr(capsys) -> None:
 
 
 def test_render_json_writes_indented_json(capsys) -> None:
-    render_json({"backend": RuntimeBackend.OLLAMA, "models": ("llama3", "qwen3")})
+    spec = ModelSpec(
+        name="llama3",
+        category=Category.CHAT,
+        capabilities=[Capability.CHAT],
+        default_tag="8b",
+        variants=[ModelVariant(tag="8b")],
+    )
+    info = ModelInfo.from_spec(spec, installed_tags=["8b"])
+    render_json({"backend": RuntimeBackend.OLLAMA, "models": (spec, info)})
 
-    assert json.loads(capsys.readouterr().out) == {
-        "backend": "ollama",
-        "models": ["llama3", "qwen3"],
-    }
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["backend"] == "ollama"
+    assert payload["models"][0]["name"] == "llama3"
+    assert payload["models"][1]["installed"] is True
 
 
 def test_render_models_displays_catalog_fields(capsys) -> None:
