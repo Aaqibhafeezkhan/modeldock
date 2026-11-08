@@ -148,9 +148,9 @@ def test_system_config_dir_uses_modeldock_scope(monkeypatch: pytest.MonkeyPatch)
 
 
 def test_default_cache_dir_uses_environment_override(
-    """Verify the cache directory environment override takes precedence."""
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
+    """Verify the cache directory environment override takes precedence."""
     override = tmp_path / "custom-cache"
     monkeypatch.setenv("MODELDOCK_CACHE_DIR", str(override))
 
@@ -175,9 +175,9 @@ def test_is_windows_checks_platform_name(monkeypatch: pytest.MonkeyPatch) -> Non
 
 
 def test_print_error_formats_modeldock_error_as_plain_text(
-    """Verify ModelDock errors are printed as plain text to stderr."""
     capsys: pytest.CaptureFixture[str],
 ) -> None:
+    """Verify ModelDock errors are printed as plain text to stderr."""
     print_error(ModelNotFoundError("missing-model"))
 
     captured = capsys.readouterr()
